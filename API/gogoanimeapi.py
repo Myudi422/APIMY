@@ -31,19 +31,19 @@ class gogoanime():
 
     def get_anime_details(animeid):
         try:
-            animelink = 'https://gogoanime.fi/category/{}'.format(animeid)
+            animelink = 'https://nanimex.org/anime/{}'.format(animeid)
             response = requests.get(animelink)
             plainText = response.text
             soup = BeautifulSoup(plainText, "lxml")
-            source_url = soup.find("div", {"class": "anime_info_body_bg"}).img
+            source_url = soup.find("div", {"class": "attachment-block clearfix"}).img
             imgg = source_url.get('src')
-            tit_url = soup.find("div", {"class": "anime_info_body_bg"}).h1.string
+            tit_url = soup.find("a", title=True)
             lis = soup.find_all('p', {"class": "type"})
             plot_sum = lis[1]
             pl = plot_sum.get_text().split(':')
             pl.remove(pl[0])
             sum = ""
-            plot_summary = sum.join(pl)
+            plot_summary = sum.jsoin(pl)
             type_of_show = lis[0].a['title']
             ai = lis[2].find_all('a')
             genres = []
